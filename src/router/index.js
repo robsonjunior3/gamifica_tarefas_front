@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
+import Home from '@/views/Home.vue'
+import Ranking from '@/views/Ranking.vue'
 import About from '@/views/AboutView.vue'
 import Tarefas from '@/views/TarefasView.vue'
 import Login from '@/views/LoginView.vue'
-import CadTarefa from '@/views/CadastroTarefaView.vue'
 import CadUsuario from '@/views/CadastrarUsuarioView.vue'
 
 const router = createRouter({
@@ -12,7 +12,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: Home
+    },
+    {
+      path: '/ranking',
+      name: 'ranking',
+      component: Ranking
     },
     {
       path: '/login',
@@ -28,11 +33,6 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: About
-    },
-    {
-      path: '/cad-tarefas',
-      name: 'cad_tarefas',
-      component: CadTarefa
     },
     {
       path: '/cad-usuario',
