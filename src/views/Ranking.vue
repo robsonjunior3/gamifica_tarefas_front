@@ -9,16 +9,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(user, index) in sortedUsers" :key="user.id">
+        <tr v-for="(user, index) in users" :key="user.id"><!--sortedUsers" :key="user.id">-->
           <td>{{ index + 1 }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.points }}</td>
+          <!-- <td>{{ user.name }}</td> -->
+          <td>{{ user.nome }}</td>
+          <!-- <td>{{ user.points }}</td> -->
+          <td>{{ user.pontuacao }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
-
+<!--
 <script>
 export default {
   data() {
@@ -38,6 +40,39 @@ export default {
     },
   },
 };
+</script>
+-->
+<script setup>
+    import { ref, onMounted } from 'vue'
+    import axios from 'axios';
+
+    onMounted(async () => {
+        setUser();
+    });
+    
+    const users = ref('');
+
+    const setUser = () => {
+      let url = 'http://127.0.0.1:8000/api/usuarios';
+        
+      let configuracao = {
+          headers: {
+              'Accept': 'application/json',
+              'Authorization': 'Bearer 47|Dkji4SRk12SipX7IUZP2KjAJj1ExP9mEPSgyUnaUdb6e1a19'
+          },
+      }
+
+      axios.get(url, configuracao)
+          .then((response) => {
+              users.value = sortUsers(response.data.data)
+          })
+          .catch(errors => {
+              console.log(errors);
+          })
+    }
+    const sortUsers = (data) => {
+        return data.sort((a, b) => b.pontuacao - a.pontuacao);
+    }
 </script>
 
 <style scoped>
