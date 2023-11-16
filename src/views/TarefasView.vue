@@ -135,14 +135,18 @@ th {
     const tarefas = ref('');
     const currentUser = ref(null);
     
+    const nome = ref('');
+    const descricao = ref('');
+    const pontuacao = ref('');
+
     const store = userStore();
 
     onMounted(async () => {
-        // if(store.hasToken()){
-        //     currentUser.value = await store.getUser;
-        //     carregarTabela();
-        // }
-        carregarTabela();
+        if(store.hasToken()){
+            currentUser.value = await store.getUser;
+            carregarTabela();
+        }
+        // carregarTabela();
     });
 
     const carregarTabela = () => {
@@ -166,6 +170,7 @@ th {
     }
 
     const vincularTarefa = (tarefaId) => {
+        // console.log(currentUser);
         let url = 'http://127.0.0.1:8000/api/associar-tarefa/' + tarefaId;
         
         let configuracao = {
@@ -206,10 +211,6 @@ th {
                 console.log(errors);
             })
     }
-
-    const nome = ref('');
-    const descricao = ref('');
-    const pontuacao = ref('');
 
     const cadastrarTarefas = () => {
         let url = 'http://127.0.0.1:8000/api/tarefas/';

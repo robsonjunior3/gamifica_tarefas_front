@@ -10,6 +10,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <a><RouterLink :to="{name:'tarefas'}">Lista de tarefas</RouterLink></a>
       <a><RouterLink :to="{name:'cad_usuario'}">Membros</RouterLink></a>
       <a><RouterLink :to="{name:'about'}">Sobre</RouterLink></a>
+      <a><RouterLink :to="{name:'login'}">Login</RouterLink></a>
     </nav>
     <div class="body">
       <RouterView />
