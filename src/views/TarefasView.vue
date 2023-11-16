@@ -138,10 +138,11 @@ th {
     const store = userStore();
 
     onMounted(async () => {
-        if(store.hasToken()){
-            currentUser.value = await store.getUser;
-            carregarTabela();
-        }
+        // if(store.hasToken()){
+        //     currentUser.value = await store.getUser;
+        //     carregarTabela();
+        // }
+        carregarTabela();
     });
 
     const carregarTabela = () => {
@@ -150,7 +151,8 @@ th {
         let configuracao = {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + store.showToken
+                'Authorization': 'Bearer 47|Dkji4SRk12SipX7IUZP2KjAJj1ExP9mEPSgyUnaUdb6e1a19',
+                // 'Authorization': 'Bearer ' + store.showToken
             },
         }
 
@@ -189,7 +191,8 @@ th {
         let configuracao = {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + store.showToken
+                'Authorization': 'Bearer 47|Dkji4SRk12SipX7IUZP2KjAJj1ExP9mEPSgyUnaUdb6e1a19'
+                // 'Authorization': 'Bearer ' + store.showToken
             },
             method: 'put'
         }
@@ -215,7 +218,8 @@ th {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + store.showToken
+                'Authorization': 'Bearer 47|Dkji4SRk12SipX7IUZP2KjAJj1ExP9mEPSgyUnaUdb6e1a19'
+                // 'Authorization': 'Bearer ' + store.showToken
             },
             method: 'post',
             body: JSON.stringify({
@@ -225,12 +229,14 @@ th {
             })
         }
         
-        axios(url, configuracao)
+        fetch(url, configuracao)
             .then(response => {
-                console.log('Tarefa inserida com sucesso. Tratar para usuário', configuracao);
+                showModal = false;
+                alert(response.data, 'Tarefa inserida com sucesso.');
             })
             .catch(errors => {
                 console.log(configuracao, errors);
+                alert('Tarefa nao cadastrada.')
             });
     }
 
