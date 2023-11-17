@@ -1,4 +1,7 @@
 <template>
+    <div>
+        <h1>Lista de tarefas</h1>
+    </div>
     <header>
         <button @click="showModal = true" class="btn-div">Cadastrar tarefa</button>
     </header>
@@ -32,7 +35,7 @@
 
     <div v-if="showModal" class="modal">
         <form class="form-tarefa" >
-            <h2 style="text-align: center;">Cadastrar tarefas</h2>
+            <h2 style="text-align: center;">Cadastrar tarefa</h2>
             <label> Nome da Tarefa: </label>
             <input type="text" name="Name" v-model="nome" placeholder="Nome da tarefa"/>
             <label> Descrição da Tarefa: </label>
@@ -49,11 +52,15 @@
   
 <style scoped>
 
+h1 {
+    padding: 20px;
+}
+
 .btn-div {
     border-radius: 5px;
     border-color: blue;
     width: auto;
-    margin-top: 50px;
+    margin-top: 0px;
     margin-bottom: 8px;
     margin-left: 78.5%;
     background-color: blue;
@@ -131,7 +138,7 @@ th {
     import axios from 'axios';
     import { userStore } from '/src/stores/UserStore.js'
 
-    const showModal = ref(false)
+    var showModal = ref(false)
     const tarefas = ref('');
     const currentUser = ref(null);
     

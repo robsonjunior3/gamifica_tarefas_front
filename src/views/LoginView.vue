@@ -1,23 +1,39 @@
 <template>
-    <div class="about">
+    <div>
         <h1>Form de login</h1>
-        <input type="text" name="apelido" v-model="apelido">
-        <input type="password" name="password" v-model="password">
+        <input type="text" name="apelido" placeholder="Apelido" v-model="apelido">
+        <input type="password" name="password" placeholder="Senha" v-model="password">
 
-        <button type="button" @click.prevent="submit()">enviar</button>
-
-        <div style="background-color: green; border: 1px solid red" v-if="logado">texto</div>
+        <button class="btn-input" type="button" @click.prevent="submit()">Logar</button>
+        <div class="msg-sucesso" style="background-color: rgb(38, 123, 38); " v-if="logado">Logado!</div>
     </div>
 </template>
   
 <style>
-@media (min-width: 1024px) {
-.about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-}
-}
+    h1 {
+        padding: 20px;
+    }
+
+    .btn-input {
+        width: auto;
+        margin-top:10px; 
+        border-radius: 5px;
+        border-color: blue;
+        align-self: center;
+        background-color: blue;
+        color: white;
+        margin-left: 5px;
+    }
+
+    .msg-sucesso {
+        margin-top: 10px;
+        margin-left: 160px;
+        display: flex;
+        align-self: center;
+        width: fit-content;
+        background-color: green;
+    }
+
 </style>
 <script setup>
     import { ref } from 'vue'

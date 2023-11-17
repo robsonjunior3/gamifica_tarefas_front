@@ -1,5 +1,8 @@
 <template>
   <div>
+        <h1>Ranking</h1>
+  </div>
+  <div>
     <table class="table-dark">
       <thead>
         <tr>
@@ -76,11 +79,15 @@ export default {
 </script>
 
 <style scoped>
+
+h1 {
+  padding: 20px;
+}
 .table-dark {
   width: 80%;
   margin: 20px;
   margin-left: 11%;
-  margin-top: 40px;
+  margin-top: 30px;
   border-radius: 10px;
   padding: 4px;
   color: #b9bbbe;
