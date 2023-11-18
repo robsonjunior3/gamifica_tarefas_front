@@ -10,7 +10,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <a><RouterLink :to="{name:'tarefas'}">Lista de tarefas</RouterLink></a>
       <a><RouterLink :to="{name:'cad_usuario'}">Membros</RouterLink></a>
       <a><RouterLink :to="{name:'about'}">Sobre</RouterLink></a>
-      <a><RouterLink :to="{name:'login'}">Login</RouterLink></a>
+      <button class="btn-login"><RouterLink :to="{name:'login'}">Login</RouterLink></button>
     </nav>
     <div class="body">
       <RouterView />
@@ -42,13 +42,20 @@ import { RouterLink, RouterView } from 'vue-router'
 } 
 
 .navbar a:hover {
-  background-color: #008655;
+  background-color: rgb(42, 87, 170);
   color: white;
 }
 
 .navbar a:active {
   background-color: white;
   color: black;
+}
+
+.btn-login {
+  margin-left: 610px;
+  background-color: rgb(42, 87, 170);
+  border-radius: 10px;
+  margin-top: 10px
 }
 
 </style>

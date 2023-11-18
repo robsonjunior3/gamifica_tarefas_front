@@ -2,8 +2,17 @@
   <main>
     <div class="home">
       <h1>Sistema de Gamificação</h1>
-      <p>Sistema de Gamificação desenvolvido como trabalho prático da disciplina de Engenharia de Software.</p>
     </div>
+    <table>
+      <tr>
+        <th>
+          nome
+        </th>
+      </tr>
+      <tr>
+        
+      </tr>
+    </table>
   </main>
 </template>
 
