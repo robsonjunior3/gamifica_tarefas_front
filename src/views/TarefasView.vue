@@ -153,7 +153,6 @@ th {
             currentUser.value = await store.getUser;
             carregarTabela();
         }
-        // carregarTabela();
     });
 
     const carregarTabela = () => {
@@ -162,8 +161,7 @@ th {
         let configuracao = {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer 47|Dkji4SRk12SipX7IUZP2KjAJj1ExP9mEPSgyUnaUdb6e1a19',
-                // 'Authorization': 'Bearer ' + store.showToken
+                'Authorization': 'Bearer ' + store.showToken
             },
         }
 
@@ -177,7 +175,6 @@ th {
     }
 
     const vincularTarefa = (tarefaId) => {
-        // console.log(currentUser);
         let url = 'http://127.0.0.1:8000/api/associar-tarefa/' + tarefaId;
         
         let configuracao = {
@@ -197,14 +194,14 @@ th {
                 console.log(errors);
             })
     }
+
     const concluirTarefa = (tarefaId) => {
         let url = 'http://127.0.0.1:8000/api/concluir-tarefa/' + tarefaId;
         
         let configuracao = {
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer 47|Dkji4SRk12SipX7IUZP2KjAJj1ExP9mEPSgyUnaUdb6e1a19'
-                // 'Authorization': 'Bearer ' + store.showToken
+                'Authorization': 'Bearer ' + store.showToken
             },
             method: 'put'
         }
@@ -226,8 +223,7 @@ th {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer 47|Dkji4SRk12SipX7IUZP2KjAJj1ExP9mEPSgyUnaUdb6e1a19'
-                // 'Authorization': 'Bearer ' + store.showToken
+                'Authorization': 'Bearer ' + store.showToken
             },
             method: 'post',
             body: JSON.stringify({
@@ -240,7 +236,7 @@ th {
         fetch(url, configuracao)
             .then(response => {
                 showModal = false;
-                alert(response.data, 'Tarefa inserida com sucesso.');
+                alert('Tarefa inserida com sucesso.');
             })
             .catch(errors => {
                 console.log(configuracao, errors);

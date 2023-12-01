@@ -6,7 +6,7 @@
     <table>
       <tr>
         <th>
-          nome
+          Gamifica Tarefas é a revolução na gestão de tarefas. Supervisores criam desafios com pontuações, enquanto equipes se unem para concluí-los e ganhar pontos, subindo no ranking. Transforme o trabalho em diversão e impulsione a produtividade! 🚀 #GamificaçãoTarefas
         </th>
       </tr>
       <tr>

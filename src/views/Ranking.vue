@@ -23,28 +23,7 @@
     </table>
   </div>
 </template>
-<!--
-<script>
-export default {
-  data() {
-    return {
-      users: [
-        { id: 1, name: 'João', points: 50 },
-        { id: 2, name: 'Maria', points: 30 },
-        { id: 3, name: 'Pedro', points: 70 },
-        { id: 4, name: 'Ana', points: 20 },
-        { id: 5, name: 'Lucas', points: 60 },
-      ],
-    };
-  },
-  computed: {
-    sortedUsers() {
-      return this.users.sort((a, b) => b.points - a.points);
-    },
-  },
-};
-</script>
--->
+
 <script setup>
     import { ref, onMounted } from 'vue'
     import axios from 'axios';
@@ -61,7 +40,7 @@ export default {
       let configuracao = {
           headers: {
               'Accept': 'application/json',
-              'Authorization': 'Bearer 47|Dkji4SRk12SipX7IUZP2KjAJj1ExP9mEPSgyUnaUdb6e1a19'
+              'Authorization': 'Bearer 5|9JRIcHQTzP76SK7JlPi1ryHmRDsfmYpuQZxQk2650445f64c'
           },
       }
 

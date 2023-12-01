@@ -16,12 +16,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="usuario in usuarios" :key="usuario.id">
+            <tr v-for="usuario in usuarios" :key="usuario.id" :id="'id_' + usuario.id">
                 <td>{{ usuario.nome }}</td>
                 <td>{{ usuario.apelido }}</td>
                 <td>{{ usuario.nivel }}</td>
-                <td><button @click="editarUsuario(usuario.id)" class="btn-input">Editar</button></td>
-                <td><button @click="excluirUsuario(usuario.id)" class="btn-input">Excluir</button></td>
+                <td><button @click="showEditModal=true;editarUsuarioForm(usuario)" class="btn-input">Editar</button></td>
+                <td><button @click="excluirUsuario(usuario)" class="btn-input">Excluir</button></td>
             </tr>
         </tbody>
     </table>
@@ -39,8 +39,28 @@
             <input type="number" name="nivel" v-model="nivel" placeholder="Nível"/>
 
             <div style="align-items: center; justify-content: center; display: flex; gap: 10px;">
-                <button type="button" @click.prevent="submit()" class="btn-input">Cadastrar</button>
+                <button type="button" @click.prevent="cadastrarUsuario()" class="btn-input">Cadastrar</button>
                 <button class="btn-close" @click="showModal = false">Fechar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- edit model -->
+    <div v-if="showEditModal" class="modal">
+        <form class="form-usuario" >
+            <h2 style="text-align: center;">Cadastrar usuário</h2>
+            <label> Usuário: </label>
+            <input type="text" name="nome" v-model="nome" placeholder="Nome do usuário"/>
+            <label> Apelido: </label>
+            <input type="text" name="apelido" v-model="apelido" placeholder="Apelido"/>
+            <label> Senha: </label>
+            <input type="text" name="senha" v-model="senha" placeholder="Senha"/>
+            <label> Nível: </label>
+            <input type="number" name="nivel" v-model="nivel" placeholder="Nível"/>
+
+            <div style="align-items: center; justify-content: center; display: flex; gap: 10px;">
+                <button type="button" @click.prevent="editarUsuarioSubmit(id)" class="btn-input">Editar</button>
+                <button class="btn-close" @click="showEditModal = false">Fechar</button>
             </div>
         </form>
     </div>
@@ -132,44 +152,128 @@ th {
 </style>
 
 <script setup>
-    import { ref } from 'vue';
+    import { ref, onMounted } from 'vue';
     import axios from 'axios';
     import { userStore } from '/src/stores/UserStore.js';
-
     const store = userStore();
 
     var showModal = ref(false);
-
+    var showEditModal = ref(false);
+    
+    const usuarios = ref('');
+    
     const nome = ref('');
     const senha = ref('');
     const apelido = ref('');
     const nivel = ref('');
+    const currentUser = ref('');
 
-    const submit = () => {
+    const id = ref('');
+
+    onMounted(async () => {
+        if(store.hasToken()){
+            currentUser.value = await store.getUser;
+            carregarTabela();
+        }
+        // carregarTabela();
+    });
+
+    const carregarTabela = () => {
         let url = 'http://127.0.0.1:8000/api/usuarios/';
-
         let configuracao = {
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + store.showToken
             },
-            method: 'post',
-            body: JSON.stringify({
-                "nome" : nome.value,
-                "senha" : senha.value,
-                "apelido" : apelido.value,
-                "nivel" : nivel.value
-            })
+            method: 'get'
         }
-        
-        axios.post(url, configuracao)
+
+        axios.get(url, configuracao)
             .then(response => {
-                response = 21;
-                console.log('Usuário inserido com sucesso. Tratar para o usuário', configuracao);
+                usuarios.value = response.data.data;
             })
-            .catch(error => {
-                console.log(error.message);
-            });
+            .catch();
     }
+    
+    const cadastrarUsuario = () => {
+        let url = 'http://127.0.0.1:8000/api/usuarios/';
+        const headers = {
+            'Authorization': 'Bearer 6|sTmYOfs8oLXfbaBJW0vPvQ8vEDzgE9s8caMzmy1wbe47e41c',
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+        };
+
+        const data = new URLSearchParams();
+        data.append('nome', nome.value);
+        data.append('apelido', apelido.value);
+        data.append('password', senha.value);
+        data.append('nivel', nivel.value);
+
+        axios.post(url, data, { headers })
+        .then(() => {
+            showModal = false;
+            usuarios.value.push({nome:nome.value,apelido:apelido.value,password:senha.value,nivel:nivel.value})
+        })
+        .catch(error => {
+            console.error('Erro na requisição:', error);
+        });
+    }
+
+    const editarUsuarioForm = (user) => {
+        id.value = user.id;
+        nome.value = user.nome;
+        apelido.value = user.apelido;
+        senha.value = user.senha;
+        nivel.value = user.nivel;
+    }
+
+    const editarUsuarioSubmit = (id) => {
+        let url = 'http://127.0.0.1:8000/api/usuarios/' + id;
+        const headers = {
+            // 'Authorization': 'Bearer 6|sTmYOfs8oLXfbaBJW0vPvQ8vEDzgE9s8caMzmy1wbe47e41c',
+            'Authorization': 'Bearer ' + store.showToken,
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+        };
+
+        const data = new URLSearchParams();
+        data.append('nome', nome.value);
+        data.append('apelido', apelido.value);
+        data.append('password', senha.value);
+        data.append('nivel', nivel.value);
+
+        axios.put(url, data, { headers })
+        .then(response => {
+            showEditModal = false;
+            let pos = usuarios.value.findIndex(usuario => usuario.id === id);
+            usuarios.value[pos] = response.data.data;
+        })
+        .catch(error => {
+            console.error('Erro na requisição:', error);
+        });
+    }
+
+    const excluirUsuario = (usuario) => {
+
+        if (confirm("Realmente deseja excluir o usuário "+usuario.nome+"?") == true) {
+            let url = 'http://127.0.0.1:8000/api/usuarios/' + usuario.id;
+            let configuracao = {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + store.showToken
+                },
+                method: 'delete'
+            }
+
+            axios.delete(url, configuracao)
+                .then(response => {
+                    console.log(response);
+                    const rowElement = document.getElementById('id_' + usuario.id);
+                    if (rowElement)
+                        rowElement.style.backgroundColor = 'red';
+                })
+                .catch();
+        }
+    }
+
 </script>
